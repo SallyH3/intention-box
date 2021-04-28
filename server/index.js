@@ -1,16 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 import postRoutes from './routes/posts.js';
-import dotenv from 'dotenv';
 
 const app = express();
 
 dotenv.config();
 
-app.use(express.json()); // Used to parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Used to parse URL-encoded bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/posts', postRoutes);
