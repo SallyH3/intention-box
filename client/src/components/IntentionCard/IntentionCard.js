@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { Card, Typography, CardHeader, IconButton, CardActions, CardContent, Button } from '@material-ui/core';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import DeleteIcon from '@material-ui/icons/HighlightOff';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -31,53 +31,55 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const IntentionCard = ({ post, id, setPosts }) => {
+const IntentionCard = ({ intention, setIntentions }) => {
   const classes = useStyles();
   const [isEditing, setIsEditing] = useState(false);
-  const [currentPost, setCurrentPost] = useState({});
+  const [currentIntention, setCurrentIntention] = useState({});
 
   const onRemoveCard = useCallback(async () => {
-    await deletePost(id);
-    const posts = await fetchPosts();
-    setPosts(posts.data);
+    await deletePost(intention._id);
+    const intentions = await fetchPosts();
+    setIntentions(intentions.data);
   }, []);
 
   const onEditCard = useCallback(() => {
     setIsEditing(true);
-    setCurrentPost({ id: id, title: post.title, message: post.message, tags: post.tags });
-  }, []);
+    setCurrentIntention({ id: intention._id, title: intention.title, message: intention.message, tags: intention.tags });
+  }, [setCurrentIntention, intention]);
 
+  if (!isEditing) {
+    return (
+      <Card variant="outlined" classes={{ root: classes.card }}>
+        <CardActions classes={{ root: classes.deleteIcon }}>
+          <Button endIcon={<EditIcon className={classes.editIcon} />} classes={{ root: classes.editBtn }} variant="contained" color="default" size="small" onClick={onEditCard}>Edit</Button>
+          <IconButton aria-label="remove-card" onClick={onRemoveCard}>
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+        <CardHeader
+          title={intention.title}
+          subheader={intention.tags}
+          classes={{ subheader: classes.italic }}
+        />
+        <CardContent>
+          <Typography>{intention.message}</Typography>
+        </CardContent>
+      </Card>
+    )
+  }
   return (
-    <Card variant="outlined" classes={{ root: classes.card }}>
-      <CardActions classes={{ root: classes.deleteIcon }}>
-        <Button endIcon={<EditIcon className={classes.editIcon} />} classes={{ root: classes.editBtn }} variant="contained" color="default" size="small" onClick={onEditCard}>Edit</Button>
-        <IconButton aria-label="remove-card" onClick={onRemoveCard}>
-          <HighlightOffIcon />
-        </IconButton>
-      </CardActions>
-      {isEditing ? <EditForm setIsEditing={setIsEditing} setPosts={setPosts} currentPost={currentPost} setCurrentPost={setCurrentPost} /> : ''}
-      <CardHeader
-        title={post.title}
-        subheader={post.tags}
-        classes={{ subheader: classes.italic }}
-      />
-      <CardContent>
-        <Typography>{post.message}</Typography>
-      </CardContent>
-    </Card>
+    <EditForm setIsEditing={setIsEditing} setIntentions={setIntentions} currentIntention={currentIntention} setCurrentIntention={setCurrentIntention} />
   )
 };
 
 IntentionCard.propTypes = {
-  post: PropTypes.object,
-  id: PropTypes.string,
-  setPosts: PropTypes.func,
+  intention: PropTypes.object,
+  setIntentions: PropTypes.func,
 };
 
 IntentionCard.defaultProps = {
-  post: {},
-  id: '',
-  setPosts: () => null,
+  intention: {},
+  setIntentions: () => null,
 };
 
 export default IntentionCard;

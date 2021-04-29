@@ -33,45 +33,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditForm = ({ setIsEditing, currentPost, setCurrentPost, setPosts }) => {
+const EditForm = ({ setIsEditing, currentIntention, setCurrentIntention, setIntentions }) => {
   const classes = useStyles();
 
   const onSave = useCallback(async (e) => {
     e.preventDefault();
-
-    const updatedPost = await updatePost(currentPost.id, currentPost);
-    setCurrentPost(updatedPost.data);
-    const posts = await fetchPosts();
-    setPosts(posts.data);
+    const updatedIntention = await updatePost(currentIntention.id, currentIntention);
+    setCurrentIntention(updatedIntention.data);
+    const intentions = await fetchPosts();
+    await setIntentions(intentions.data);
     setIsEditing(false);
-  }, []);
+  }, [currentIntention]);
 
   return (
     <Paper classes={{ root: classes.paper }}>
       <FormControl classes={{ root: clsx(classes.root, classes.form) }}>
         <TextField
+          required
           name="edit-title"
           variant="outlined"
           label="Title"
-          value={currentPost.title || ''}
-          onChange={(e) => setCurrentPost({ ...currentPost, title: e.target.value })}
+          value={currentIntention.title || ''}
+          onChange={(e) => setCurrentIntention({ ...currentIntention, title: e.target.value })}
         />
         <TextField
+          required
           name="edit-message"
           variant="outlined"
           label="Message"
-          value={currentPost.message || ''}
-          onChange={(e) => setCurrentPost({ ...currentPost, message: e.target.value })}
+          value={currentIntention.message || ''}
+          onChange={(e) => setCurrentIntention({ ...currentIntention, message: e.target.value })}
         />
         <TextField
           name="edit-tags"
           variant="outlined"
           label="Tags"
-          value={currentPost.tags || ''}
-          onChange={(e) => setCurrentPost({ ...currentPost, tags: e.target.value })}
+          value={currentIntention.tags || ''}
+          onChange={(e) => setCurrentIntention({ ...currentIntention, tags: e.target.value })}
         />
         <section className={classes.buttonContainer}>
-          <Button classes={{ root: clsx(classes.button, classes.submitBtn) }} variant="contained" color="primary" size="medium" type="submit" onClick={onSave}>Save</Button>
+          <Button classes={{ root: clsx(classes.button, classes.submitBtn) }} variant="contained" color="primary" size="medium" type="submit" onClick={onSave} disabled={!currentIntention.title || !currentIntention.message}>Save</Button>
           <Button classes={{ root: classes.button }} variant="outlined" color="primary" size="medium" onClick={() => setIsEditing(false)}>Cancel</Button>
         </section>
       </FormControl>
@@ -80,15 +81,17 @@ const EditForm = ({ setIsEditing, currentPost, setCurrentPost, setPosts }) => {
 };
 
 EditForm.propTypes = {
-  currentPost: PropTypes.object,
-  setCurrentPost: PropTypes.func,
+  currentIntention: PropTypes.object,
+  setCurrentIntention: PropTypes.func,
   setIsEditing: PropTypes.func,
+  setIntentions: PropTypes.func,
 };
 
 EditForm.defaultProps = {
-  currentPost: {},
-  setCurrentPost: () => null,
+  currentIntention: {},
+  setCurrentIntention: () => null,
   setIsEditing: () => null,
+  setIntentions: () => null,
 };
 
 export default EditForm;

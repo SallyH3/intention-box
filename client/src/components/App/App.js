@@ -7,11 +7,11 @@ import NavBar from '../NavBar/NavBar';
 import { fetchPosts } from '../../api/index';
 
 const App = () => {
-  const [posts, setPosts] = useState();
+  const [intentions, setIntentions] = useState();
 
   const getPosts = async () => {
-    const posts = await fetchPosts();
-    setPosts(posts.data);
+    const intentions = await fetchPosts();
+    setIntentions(intentions.data);
   }
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const App = () => {
             <Grid item xs={12} s={7}>
             </Grid>
             <Grid item xs={12} s={4}>
-              <Form posts={posts} setPosts={setPosts} />
+              <Form intentions={intentions} setIntentions={setIntentions} />
             </Grid>
           </Grid>
         </Container>

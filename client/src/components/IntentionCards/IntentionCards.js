@@ -10,35 +10,43 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(3),
   },
+  progressBar: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 }));
 
-const IntentionCards = ({ posts, setPosts }) => {
+const IntentionCards = ({ intentions, setIntentions }) => {
   const classes = useStyles();
 
-  return (
-    !posts ? <CircularProgress /> : (
-      <section className={classes.container}>
-        {posts.map((post) => (
-          <IntentionCard
-            post={post}
-            id={post._id}
-            key={post._id}
-            setPosts={setPosts}
-          />
-        ))}
+  if (!intentions.length) {
+    return (
+      <section className={classes.progressBar}>
+        <CircularProgress />
       </section>
     )
+  }
+  return (
+    <section className={classes.container}>
+      {intentions.map((intention) => (
+        <IntentionCard
+          intention={intention}
+          key={intention._id}
+          setIntentions={setIntentions}
+        />
+      ))}
+    </section>
   )
 }
 
 IntentionCards.propTypes = {
-  posts: PropTypes.array,
-  setPosts: PropTypes.func,
+  intentions: PropTypes.array,
+  setIntentions: PropTypes.func,
 };
 
 IntentionCards.defaultProps = {
-  posts: [],
-  setPosts: () => null,
+  intentions: [],
+  setIntentions: () => null,
 };
 
 export default IntentionCards;

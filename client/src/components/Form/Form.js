@@ -35,22 +35,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Form = ({ posts, setPosts }) => {
+const Form = ({ intentions, setIntentions }) => {
   const classes = useStyles();
-  const [postData, setPostData] = useState({});
+  const [intention, setIntention] = useState({});
 
   const onReset = useCallback((e) => {
     e.preventDefault();
-    setPostData({ title: '', message: '', tags: '' });
+    setIntention({ title: '', message: '', tags: '' });
   }, []);
 
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
-    await createPost(postData);
-    const posts = await fetchPosts();
-    setPosts(posts.data);
+    await createPost(intention);
+    const intentions = await fetchPosts();
+    setIntention(intentions.data);
     onReset(e);
-  }, [postData, posts]);
+  }, [intention, intentions]);
 
   return (
     <Paper classes={{ root: classes.paper }}>
@@ -62,8 +62,8 @@ const Form = ({ posts, setPosts }) => {
           label="Title"
           fullWidth
           required
-          value={postData.title || ''}
-          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+          value={intention.title || ''}
+          onChange={(e) => setIntention({ ...intention, title: e.target.value })}
         />
         <TextField
           name="message"
@@ -71,34 +71,34 @@ const Form = ({ posts, setPosts }) => {
           label="Message"
           fullWidth
           required
-          value={postData.message || ''}
-          onChange={(e) => setPostData({ ...postData, message: e.target.value })}
+          value={intention.message || ''}
+          onChange={(e) => setIntention({ ...intention, message: e.target.value })}
         />
         <TextField
           name="tags"
           variant="outlined"
           label="Tags"
-          value={postData.tags || ''}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          value={intention.tags || ''}
+          onChange={(e) => setIntention({ ...intention, tags: e.target.value })}
         />
         <section className={classes.buttonContainer}>
-          <Button classes={{ root: clsx(classes.button, classes.submitBtn) }} variant="contained" color="primary" size="medium" type="submit" onClick={onSubmit} disabled={!postData.title || !postData.message}>Submit</Button>
-          <Button classes={{ root: classes.button }} variant="contained" color="secondary" size="medium" onClick={onReset} disabled={!postData.title && !postData.message && !postData.tags}>Reset</Button>
+          <Button classes={{ root: clsx(classes.button, classes.submitBtn) }} variant="contained" color="primary" size="medium" type="submit" onClick={onSubmit} disabled={!intention.title || !intention.message}>Submit</Button>
+          <Button classes={{ root: classes.button }} variant="contained" color="secondary" size="medium" onClick={onReset} disabled={!intention.title && !intention.message && !intention.tags}>Reset</Button>
         </section>
       </FormControl>
-      <IntentionCards posts={posts} setPosts={setPosts} />
+      <IntentionCards intentions={intentions} setIntentions={setIntentions} />
     </Paper>
   )
 };
 
 Form.propTypes = {
-  posts: PropTypes.array,
-  setPosts: PropTypes.func,
+  intentions: PropTypes.array,
+  setIntentions: PropTypes.func,
 };
 
 Form.defaultProps = {
-  posts: [],
-  setPosts: () => null,
+  intentions: [],
+  setIntentions: () => null,
 };
 
 export default Form;
