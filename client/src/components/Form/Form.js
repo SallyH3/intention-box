@@ -39,6 +39,8 @@ const Form = ({ intentions, setIntentions }) => {
   const classes = useStyles();
   const [intention, setIntention] = useState({});
 
+  const onChange = useCallback((e) => setIntention({ ...intention, [e.target.name]: e.target.value }), [setIntention, intention]);
+
   const onReset = useCallback((e) => {
     e.preventDefault();
     setIntention({ title: '', message: '', tags: '' });
@@ -48,7 +50,7 @@ const Form = ({ intentions, setIntentions }) => {
     e.preventDefault();
     await createPost(intention);
     const intentions = await fetchPosts();
-    setIntention(intentions.data);
+    setIntentions(intentions.data);
     onReset(e);
   }, [intention, intentions]);
 
@@ -63,7 +65,7 @@ const Form = ({ intentions, setIntentions }) => {
           fullWidth
           required
           value={intention.title || ''}
-          onChange={(e) => setIntention({ ...intention, title: e.target.value })}
+          onChange={(e) => onChange(e)}
         />
         <TextField
           name="message"
@@ -72,14 +74,14 @@ const Form = ({ intentions, setIntentions }) => {
           fullWidth
           required
           value={intention.message || ''}
-          onChange={(e) => setIntention({ ...intention, message: e.target.value })}
+          onChange={(e) => onChange(e)}
         />
         <TextField
           name="tags"
           variant="outlined"
           label="Tags"
           value={intention.tags || ''}
-          onChange={(e) => setIntention({ ...intention, tags: e.target.value })}
+          onChange={(e) => onChange(e)}
         />
         <section className={classes.buttonContainer}>
           <Button classes={{ root: clsx(classes.button, classes.submitBtn) }} variant="contained" color="primary" size="medium" type="submit" onClick={onSubmit} disabled={!intention.title || !intention.message}>Submit</Button>

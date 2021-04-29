@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 const EditForm = ({ setIsEditing, currentIntention, setCurrentIntention, setIntentions }) => {
   const classes = useStyles();
 
+  const onChange = useCallback((e) => setCurrentIntention({ ...currentIntention, [e.target.name]: e.target.value }), [setCurrentIntention, currentIntention]);
+
   const onSave = useCallback(async (e) => {
     e.preventDefault();
     const updatedIntention = await updatePost(currentIntention.id, currentIntention);
@@ -50,26 +52,26 @@ const EditForm = ({ setIsEditing, currentIntention, setCurrentIntention, setInte
       <FormControl classes={{ root: clsx(classes.root, classes.form) }}>
         <TextField
           required
-          name="edit-title"
+          name="title"
           variant="outlined"
           label="Title"
           value={currentIntention.title || ''}
-          onChange={(e) => setCurrentIntention({ ...currentIntention, title: e.target.value })}
+          onChange={(e) => onChange(e)}
         />
         <TextField
           required
-          name="edit-message"
+          name="message"
           variant="outlined"
           label="Message"
           value={currentIntention.message || ''}
-          onChange={(e) => setCurrentIntention({ ...currentIntention, message: e.target.value })}
+          onChange={(e) => onChange(e)}
         />
         <TextField
-          name="edit-tags"
+          name="tags"
           variant="outlined"
           label="Tags"
           value={currentIntention.tags || ''}
-          onChange={(e) => setCurrentIntention({ ...currentIntention, tags: e.target.value })}
+          onChange={(e) => onChange(e)}
         />
         <section className={classes.buttonContainer}>
           <Button classes={{ root: clsx(classes.button, classes.submitBtn) }} variant="contained" color="primary" size="medium" type="submit" onClick={onSave} disabled={!currentIntention.title || !currentIntention.message}>Save</Button>
