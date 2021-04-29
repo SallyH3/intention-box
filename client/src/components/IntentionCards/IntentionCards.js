@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { CircularProgress } from '@material-ui/core';
 
 import IntentionCard from '../IntentionCard/IntentionCard';
 
@@ -19,13 +18,6 @@ const useStyles = makeStyles((theme) => ({
 const IntentionCards = ({ intentions, setIntentions }) => {
   const classes = useStyles();
 
-  if (!intentions.length) {
-    return (
-      <section className={classes.progressBar}>
-        <CircularProgress />
-      </section>
-    )
-  }
   return (
     <section className={classes.container}>
       {intentions.map((intention) => (
