@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Paper, FormControl } from '@material-ui/core';
 
-import { updatePost, fetchPosts } from '../../api';
+import { updateIntention, fetchIntentions } from '../../api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,9 +40,9 @@ const EditForm = ({ setIsEditing, currentIntention, setCurrentIntention, setInte
 
   const onSave = useCallback(async (e) => {
     e.preventDefault();
-    const updatedIntention = await updatePost(currentIntention.id, currentIntention);
+    const updatedIntention = await updateIntention(currentIntention.id, currentIntention);
     setCurrentIntention(updatedIntention.data);
-    const intentions = await fetchPosts();
+    const intentions = await fetchIntentions();
     await setIntentions(intentions.data);
     setIsEditing(false);
   }, [currentIntention]);

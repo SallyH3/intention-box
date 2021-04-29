@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Typography, Paper, FormControl } from '@material-ui/core';
 
-import { createPost, fetchPosts } from '../../api';
+import { createIntention, fetchIntentions } from '../../api';
 
 import IntentionCards from '../IntentionCards/IntentionCards';
 
@@ -48,8 +48,8 @@ const Form = ({ intentions, setIntentions }) => {
 
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
-    await createPost(intention);
-    const intentions = await fetchPosts();
+    await createIntention(intention);
+    const intentions = await fetchIntentions();
     setIntentions(intentions.data);
     onReset(e);
   }, [intention, intentions]);

@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 
 import EditForm from '../EditForm/EditForm';
-import { deletePost, fetchPosts } from '../../api/index';
+import { deleteIntention, fetchIntentions } from '../../api/index';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -37,8 +37,8 @@ const IntentionCard = ({ intention, setIntentions }) => {
   const [currentIntention, setCurrentIntention] = useState({});
 
   const onRemoveCard = useCallback(async () => {
-    await deletePost(intention._id);
-    const intentions = await fetchPosts();
+    await deleteIntention(intention._id);
+    const intentions = await fetchIntentions();
     setIntentions(intentions.data);
   }, []);
 

@@ -4,18 +4,18 @@ import { Container, Grow, Grid } from '@material-ui/core';
 
 import Form from '../Form/Form';
 import NavBar from '../NavBar/NavBar';
-import { fetchPosts } from '../../api/index';
+import { fetchIntentions } from '../../api/index';
 
 const App = () => {
   const [intentions, setIntentions] = useState();
 
-  const getPosts = async () => {
-    const intentions = await fetchPosts();
+  const getIntentions = async () => {
+    const intentions = await fetchIntentions();
     setIntentions(intentions.data);
   }
 
   useEffect(() => {
-    getPosts();
+    getIntentions();
   }, []);
 
   return (

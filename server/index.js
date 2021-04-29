@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import postRoutes from './routes/posts.js';
+import intentionRoutes from './routes/intentions.js';
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use('/posts', postRoutes);
+app.use('/intentions', intentionRoutes);
 
 const PORT = process.env.PORT|| 5000;
 

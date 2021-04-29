@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/posts';
+const url = 'http://localhost:5000/intentions';
 
-export const fetchPosts = () => axios.get(url);
-export const createPost = (newPost) => axios.post(url, newPost);
-export const updatePost = (id, updatedPost) => axios.put(`${url}/${id}`, updatedPost);
-export const deletePost = (id) => axios.delete(`${url}/${id}`);
+export const fetchIntentions = () => axios.get(url);
+export const createIntention = (newIntention) => axios.post(url, newIntention);
+export const updateIntention = (id, updatedIntention) => axios.put(`${url}/${id}`, updatedIntention);
+export const deleteIntention = (id) => axios.delete(`${url}/${id}`);
