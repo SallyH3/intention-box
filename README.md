@@ -5,6 +5,10 @@ Simple MERN app with primary focus on learning the backend
 
 ## Abstract:
 
+_[Deployed front-end](https://intention-box.netlify.app/)_
+
+_[Deployed back-end](https://intention-box.herokuapp.com/intentions)_
+
 As a practice project outside of working my full-time job, I used MongoDB, Express, React.js, and Node to create an app where users can create intentions, view intentions, update intentions, and delete intentions. 
 
 The focus of this project was on the backend and as a result, sacrifices on styling and appearance were made as a trade off (which was tough to live with being someone who mainly works in the front end).
