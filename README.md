@@ -43,5 +43,5 @@ npm install
 
 ## Author:
 
-[Sally Haefling](https://github.com/SallyH3)
+[Sally Skarr](https://github.com/SallyH3)
 
